@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "mx.edu.cetys"
-version = "0.   0.1-SNAPSHOT"
+version = "0.0.1-SNAPSHOT"
 description = "Testing Class"
 
 java {
