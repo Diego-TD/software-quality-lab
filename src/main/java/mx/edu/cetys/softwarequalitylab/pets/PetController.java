@@ -1,0 +1,36 @@
+package mx.edu.cetys.softwarequalitylab.pets;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/pets")
+public class PetController {
+    private final PetService petService;
+
+    public PetController(PetService petService) {
+        this.petService = petService;
+    }
+
+    // DTOs for Request and responses
+    record PetRequest(String name, String color, String race, Integer age){}
+    record PetResponse(Long id,String name, String color, String race, Integer age) {}
+    record ApiResponse<T>(String info, T response, String error){}
+
+    @GetMapping("/help")
+    ApiResponse<PetResponse> help() {
+        return new ApiResponse<>("This is the help endpoint", null, null);
+    }
+
+    @PostMapping
+    ApiResponse<PetResponse> createPet(@RequestBody PetRequest petRequest) {
+        return new ApiResponse<>("New Pet was added", petService.savePet(petRequest), null);
+    }
+
+
+    // GET localhost:8080/pets -- TODOS los pets, TODO: pagination
+    // GET localhost:8080/pets/{id} -- pet by id
+    // POST localhost:8080/pets -- New pet with RequestBody {json body} - DTO/Record/POJO
+    // PUT localhost:8080/pets/{id} -- Update pet by id
+    // DELETE localhost:8080/pets/{id} -- Flag available: yes/no
+
+}

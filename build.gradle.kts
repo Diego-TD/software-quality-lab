@@ -23,13 +23,16 @@ extra["springModulithVersion"] = "1.4.7"
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.modulith:spring-modulith-starter-core")
+    implementation("org.spxringframework.modulith:spring-modulith-starter-core")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.modulith:spring-modulith-starter-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.springframework.modulith:spring-modulith-actuator")
     runtimeOnly("org.springframework.modulith:spring-modulith-observability")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testImplementation("org.mockito:mockito-core:5.10.0")
+    runtimeOnly("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
