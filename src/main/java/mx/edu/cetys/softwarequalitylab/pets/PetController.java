@@ -2,6 +2,8 @@ package mx.edu.cetys.softwarequalitylab.pets;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pets")
 public class PetController {
@@ -14,6 +16,7 @@ public class PetController {
     // DTOs for Request and responses
     record PetRequest(String name, String color, String race, Integer age){}
     record PetResponse(Long id,String name, String color, String race, Integer age) {}
+    record PetsResponse(List<Pet> pets) {}
     record ApiResponse<T>(String info, T response, String error){}
 
     @GetMapping("/help")
@@ -26,6 +29,10 @@ public class PetController {
         return new ApiResponse<>("New Pet was added", petService.savePet(petRequest), null);
     }
 
+    @GetMapping
+    ApiResponse<PetsResponse> getPets() {
+        return new ApiResponse<>("List of all pets", petService.getAllPets(), null);
+    }
 
     // GET localhost:8080/pets -- TODOS los pets, TODO: pagination
     // GET localhost:8080/pets/{id} -- pet by id

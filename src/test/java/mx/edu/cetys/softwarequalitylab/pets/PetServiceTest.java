@@ -47,7 +47,10 @@ public class PetServiceTest {
         Mockito.verify(petRepository, times(1)).save(any(Pet.class));
 
         assertEquals(1, petResponse.id());
-        assertEquals("Juan", petRequest.name());
+        assertEquals("Juan", petResponse.name());
+        assertEquals("Negro", petResponse.color());
+        assertEquals("Chihuahua", petResponse.race());
+        assertEquals(5, petResponse.age());
     }
 
     @Test

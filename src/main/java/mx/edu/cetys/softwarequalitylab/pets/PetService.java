@@ -14,7 +14,7 @@ public class PetService {
         this.petRepository = petRepository;
     }
 
-    public PetController.PetResponse savePet(PetController.PetRequest petRequest) {
+    PetController.PetResponse savePet(PetController.PetRequest petRequest) {
         log.debug("Saving Pet Request: {}", petRequest);
 
 
@@ -35,4 +35,9 @@ public class PetService {
 
         return true;
     }
+
+    PetController.PetsResponse getAllPets() {
+        return new PetController.PetsResponse(petRepository.findAll());
+    }
+
 }
