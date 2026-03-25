@@ -50,11 +50,11 @@ public class PetControllerIntegrationTest {
                 .andExpect(jsonPath("$.info")
                         .value("New Pet was added"))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.response.id").value(1))
-                .andExpect(jsonPath("$.response.name").value("firu"))
-                .andExpect(jsonPath("$.response.color").value("cacahuate"))
-                .andExpect(jsonPath("$.response.race").value("chichuaha"))
-                .andExpect(jsonPath("$.response.age").value(10))
+                .andExpect(jsonPath("$.response.pet.id").value(1))
+                .andExpect(jsonPath("$.response.pet.name").value("firu"))
+                .andExpect(jsonPath("$.response.pet.color").value("cacahuate"))
+                .andExpect(jsonPath("$.response.pet.race").value("chichuaha"))
+                .andExpect(jsonPath("$.response.pet.age").value(10))
         ;
     }
 

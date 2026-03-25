@@ -19,6 +19,7 @@ public class PetController {
     record PetResponse(Long id,String name, String color, String race, Integer age) {}
     record PetsResponse(List<Pet> pets) {}
     record ApiResponse<T>(String info, T response, String error){}
+    public record PetWrapper(PetResponse pet){}
 
     @GetMapping("/help")
     ApiResponse<PetResponse> help() {
@@ -27,8 +28,8 @@ public class PetController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ApiResponse<PetResponse> createPet(@RequestBody PetRequest petRequest) {
-        return new ApiResponse<>("New Pet was added", petService.savePet(petRequest), null);
+    ApiResponse<PetWrapper> createPet(@RequestBody PetRequest petRequest) {
+        return new ApiResponse<>("New Pet was added", new PetWrapper(petService.savePet(petRequest)) , null);
     }
 
     @GetMapping
