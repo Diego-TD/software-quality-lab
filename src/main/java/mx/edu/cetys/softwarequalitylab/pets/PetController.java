@@ -1,5 +1,6 @@
 package mx.edu.cetys.softwarequalitylab.pets;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class PetController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     ApiResponse<PetResponse> createPet(@RequestBody PetRequest petRequest) {
         return new ApiResponse<>("New Pet was added", petService.savePet(petRequest), null);
     }
