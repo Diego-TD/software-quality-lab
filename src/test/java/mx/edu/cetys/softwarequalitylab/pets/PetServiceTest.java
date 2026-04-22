@@ -1,5 +1,6 @@
 package mx.edu.cetys.softwarequalitylab.pets;
 
+import mx.edu.cetys.softwarequalitylab.pets.exceptions.InvalidPetDataException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -8,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -54,15 +56,22 @@ public class PetServiceTest {
     }
 
     @Test
-    void getAllPets() {
-        // recibir peticion del controller
-        // query a la bd
-        // mapear los valores del dto a la respuesta de pet
-        // si la bd no tiene valoreas no fallar, regresar array vacio
+    void savePet_InvalidName_ExceptionExpected(){
+        var petRequest = new PetController.PetRequest("J","Negro","Chihuahua", 5);
+        assertThrows(InvalidPetDataException.class, () -> petService.savePet(petRequest));
     }
 
 
+    // TODO: get pet with Id, but its not in db, make sure 404 is return
 
+    // TODO add tests for getAllPets
+//    @Test
+//    void getAllPets() {
+//        // recibir peticion del controller
+//        // query a la bd
+//        // mapear los valores del dto a la respuesta de pet
+//        // si la bd no tiene valoreas no fallar, regresar array vacio
+//    }
 
 
 }

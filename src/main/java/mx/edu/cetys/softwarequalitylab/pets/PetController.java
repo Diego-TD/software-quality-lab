@@ -18,7 +18,7 @@ public class PetController {
     record PetRequest(String name, String color, String race, Integer age){}
     record PetResponse(Long id,String name, String color, String race, Integer age) {}
     record PetsResponse(List<Pet> pets) {}
-    record ApiResponse<T>(String info, T response, String error){}
+    public record ApiResponse<T>(String info, T response, String error){}
     public record PetWrapper(PetResponse pet){}
 
     @GetMapping("/help")

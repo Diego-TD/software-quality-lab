@@ -1,5 +1,6 @@
 package mx.edu.cetys.softwarequalitylab.pets;
 
+import mx.edu.cetys.softwarequalitylab.pets.exceptions.InvalidPetDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,31 @@ public class PetService {
 
 
     private boolean validatePet(PetController.PetRequest petRequest) {
-        // TODO: validation of pet request
+        // TODO: increase code coverage
+
+        if (petRequest == null){
+            throw new InvalidPetDataException("Invalid Pet Request");
+        }
+
+        // name.lenght > 2 characters
+        if (petRequest.name().isBlank() || petRequest.name().length() < 3) {
+            throw new InvalidPetDataException("Invalid Pet Name");
+        }
+
+        // age > 0
+        if (petRequest.age() <0 || petRequest.age() > 100) {
+            throw new InvalidPetDataException("Invalid Pet Age");
+        }
+
+        // color not empty
+        if (petRequest.color().isBlank()) {
+            throw new InvalidPetDataException("Invalid Pet Color");
+        }
+
+        // race not empty
+        if (petRequest.race().isBlank()) {
+            throw new InvalidPetDataException("Invalid Pet Race");
+        }
 
         return true;
     }
