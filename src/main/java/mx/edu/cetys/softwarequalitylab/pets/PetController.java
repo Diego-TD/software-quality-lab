@@ -1,5 +1,6 @@
 package mx.edu.cetys.softwarequalitylab.pets;
 
+import mx.edu.cetys.softwarequalitylab.commons.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,6 @@ public class PetController {
     record PetRequest(String name, String color, String race, Integer age){}
     record PetResponse(Long id,String name, String color, String race, Integer age) {}
     record PetsResponse(List<Pet> pets) {}
-    public record ApiResponse<T>(String info, T response, String error){}
     public record PetWrapper(PetResponse pet){}
 
     @GetMapping("/help")
@@ -32,15 +32,20 @@ public class PetController {
         return new ApiResponse<>("New Pet was added", new PetWrapper(petService.savePet(petRequest)) , null);
     }
 
+    // TODO: pagination
     @GetMapping
     ApiResponse<PetsResponse> getPets() {
         return new ApiResponse<>("List of all pets", petService.getAllPets(), null);
     }
 
-    // GET localhost:8080/pets -- TODOS los pets, TODO: pagination
-    // GET localhost:8080/pets/{id} -- pet by id
-    // POST localhost:8080/pets -- New pet with RequestBody {json body} - DTO/Record/POJO
+    @GetMapping("/{petId}")
+    @ResponseStatus(HttpStatus.OK)
+     ApiResponse<PetWrapper> findPetById(@PathVariable Long petId) {
+        var pet = petService.getPetById(petId);
+        return new ApiResponse<>("Pet found", new PetWrapper(pet), null);
+     }
+
     // PUT localhost:8080/pets/{id} -- Update pet by id
     // DELETE localhost:8080/pets/{id} -- Flag available: yes/no
-
+    // not found
 }

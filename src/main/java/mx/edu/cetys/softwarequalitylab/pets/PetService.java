@@ -1,6 +1,7 @@
 package mx.edu.cetys.softwarequalitylab.pets;
 
 import mx.edu.cetys.softwarequalitylab.pets.exceptions.InvalidPetDataException;
+import mx.edu.cetys.softwarequalitylab.pets.exceptions.PetNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class PetService {
         Pet savedPet = petRepository.save(newPet);
         log.debug("Saved Pet Response: {}", savedPet);
 
-        return new PetController.PetResponse(savedPet.getId(),  savedPet.getName(), savedPet.getColor(), savedPet.getRace(), savedPet.getAge());
+        return getPetResponseMapper(savedPet);
     }
 
 
@@ -65,4 +66,33 @@ public class PetService {
         return new PetController.PetsResponse(petRepository.findAll());
     }
 
+    private void validPetId(Long petId) {
+        if (petId == null || petId < 0){
+            throw new InvalidPetDataException("Invalid Pet Id");
+        }
+    }
+
+    private PetController.PetResponse getPetResponseMapper(Pet pet) {
+        return new PetController.PetResponse(
+                pet.getId(),
+                pet.getName(),
+                pet.getColor(),
+                pet.getRace(),
+                pet.getAge());
+    }
+
+    // TODO: add code coverage, unit tests and integration tests
+    PetController.PetResponse getPetById(Long petId){
+        log.info("Starting pet Request Validations, petId={}", petId);
+        validPetId(petId);
+
+        var petFromDb = petRepository.findById(petId);
+
+        if (petFromDb.isEmpty()) {
+            throw new PetNotFoundException("Pet with id: " + petId+ ", not Found");
+        }
+
+        var realPet = petFromDb.get();
+        return getPetResponseMapper(realPet);
+    }
 }
